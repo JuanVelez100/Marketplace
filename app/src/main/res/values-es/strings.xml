@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Tienda Virtual</string>
+    <string name="fire_base">FireBase</string>
+    <string name="fire_base_message">Integracion de Firebase completa</string>
+    <string name="go_markerplace">GoMarkerplace</string>
+    <string name="test_login">Iniciar</string>
+    <string name="test_username">Correo</string>
+    <string name="test_password">Clave</string>
+    <string name="test_userExample">ejemplo@dominio.com</string>
+    <string name="test_passwordExample">Tu Contraseña</string>
+    <string name="test_register">Registro</string>
+    <string name="test_provider">Provedor</string>
+    <string name="test_signoff">Cerrar</string>
+    <string name="test_welcome">Bienvenido</string>
+    <string name="test_errorlogin">Correo o clave invalidas</string>
+    <string name="test_errorAuth">Error al autenticar</string>
+    <string name="test_Home">Inicio</string>
+
+
+</resources>
