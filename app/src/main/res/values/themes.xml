@@ -20,4 +20,13 @@
         </item>
     </style>
 
+    <style name="Theme.Marketplace.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Marketplace.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Marketplace.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
