@@ -15,6 +15,30 @@
     <string name="test_errorlogin">Correo o clave invalidas</string>
     <string name="test_errorAuth">Error al autenticar</string>
     <string name="test_Home">Inicio</string>
-
+    <string name="test_Return">Volver</string>
+    <string name="test_Name">Nombre</string>
+    <string name="test_NameExample">Tu Nombre</string>
+    <string name="test_LastName">Apellido</string>
+    <string name="test_LastNameExample">Tu Apellido</string>
+    <string name="test_Mobile">Celular</string>
+    <string name="test_MobileExample">311111111</string>
+    <string name="test_Terms">Acepto terminos y condiciones</string>
+    <string name="test_EmptyMail">Correo vacio</string>
+    <string name="test_EmptyPassword">Clave vacia</string>
+    <string name="test_EmptyName">Nombre Vacio</string>
+    <string name="test_EmptyLastName">Apellido Vacio</string>
+    <string name="test_EmptyMobile">Celular vacio</string>
+    <string name="test_FalseTerms">Los término deben confirmarse</string>
+    <string name="test_ValidateError">Error al Validar</string>
+    <string name="test_lowercase">Al menos una  minúscula</string>
+    <string name="test_minimum8">Mínimo 8 caracteres</string>
+    <string name="test_uppercase">Al menos una mayúscula</string>
+    <string name="test_digit">Al menos un número</string>
+    <string name="test_character">Al menos un carácter</string>
+    <string name="test_emailerror">No es un correo</string>
+    <string name="test_TermsLink">Términos y condiciones</string>
+    <string name="test_TermsMessage">Aceptar todas las politicas, seguridad y terminos al registrarse.</string>
+    <string name="test_ok">Aceptar</string>
+    <string name="test_cancel">Cancelar</string>
 
 </resources>

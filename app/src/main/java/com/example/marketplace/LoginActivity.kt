@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString(
             resources.getString(R.string.fire_base),
-            resources.getString(R.string.fire_base)
+            resources.getString(R.string.fire_base_message)
         )
         analytics.logEvent(resources.getString(R.string.go_markerplace), bundle)
 
@@ -111,23 +111,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onRegister(view: android.view.View) {
-        var username = editUserName!!.text.toString();
-        var password = editPassword!!.text.toString();
-
-        if (username.isNotEmpty() && password.isNotEmpty()) {
-
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(username, password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        showHome(username, ProviderType.BASIC)
-                    } else {
-                        getToast(resources.getString(R.string.test_errorAuth));
-                    }
-                }
-
-        } else {
-            getToast(resources.getString(R.string.test_errorlogin));
-        }
+        val registerIntent = Intent(this, RegisterActivity::class.java)
+        startActivity(registerIntent)
+        getToast(resources.getString(R.string.test_register));
     }
 
     private fun showHome(username: String, provider: ProviderType) {
@@ -193,7 +179,6 @@ class LoginActivity : AppCompatActivity() {
     fun facebookLogin(view: android.view.View) {
 
         FacebookSdk.sdkInitialize(this);
-
         Log.d("AppLog", "key:" + FacebookSdk.getApplicationSignature(this)+"=");
 
         LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
