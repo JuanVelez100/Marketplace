@@ -10,7 +10,7 @@
     <string name="test_passwordExample">Your Password</string>
     <string name="test_register">Register</string>
     <string name="test_provider">Provider</string>
-    <string name="test_signoff">Sign off</string>
+    <string name="test_signoff">Close</string>
     <string name="test_welcome">Welcome</string>
     <string name="test_errorlogin">Invalid email or password</string>
     <string name="test_errorAuth">Failed to authenticate</string>
@@ -54,7 +54,7 @@
     <string name="nav_header_desc" translatable="false">Navigation header</string>
     <string name="action_settings" translatable="false">Settings</string>
 
-    <string name="menu_home" translatable="false">Home</string>
+    <string name="menu_home">Products</string>
     <string name="menu_gallery" translatable="false">Gallery</string>
     <string name="menu_slideshow" translatable="false">Slideshow</string>
 

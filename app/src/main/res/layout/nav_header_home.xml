@@ -21,13 +21,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/nav_header_desc"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
+
             app:srcCompat="@mipmap/ic_launcher_round" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="vertical">
 
             <TextView
@@ -35,37 +34,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/test_username"
-                android:textSize="12dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/providerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/test_provider"
-                android:textSize="18dp" />
+                android:textSize="12dp" />
+
+            <Button
+                android:id="@+id/btnSignoff"
+                android:layout_width="85dp"
+                android:layout_height="35dp"
+                android:backgroundTint="@color/green_200"
+                android:onClick="onSignoff"
+                android:text="@string/test_signoff"
+                android:textSize="12dp"/>
+
         </LinearLayout>
 
-
-
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnSignoff"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/green_200"
-            android:onClick="onSignoff"
-            android:text="@string/test_signoff"
-            android:layout_marginLeft="5dp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
 
 </LinearLayout>

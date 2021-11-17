@@ -50,18 +50,18 @@ class RegisterActivity : AppCompatActivity() {
 
         if (Validation(username, password,name,lastname,mobile,terms)) {
 
-            //Save User
-            db.collection("user").document(username).set(
-                hashMapOf("password" to password,
-                    "name" to name,
-                    "lastname" to lastname,
-                    "mobile" to mobile,
-                    "terms" to terms))
-
             //Save Auth
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
+                        //Save User
+                        db.collection("user").document(username).set(
+                            hashMapOf("password" to password,
+                                "name" to name,
+                                "lastname" to lastname,
+                                "mobile" to mobile,
+                                "terms" to terms))
+
                         showHome(username, ProviderType.BASIC)
                     } else {
                         getToast(resources.getString(R.string.test_errorAuth));

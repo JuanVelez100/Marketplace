@@ -40,5 +40,6 @@
     <string name="test_TermsMessage">Aceptar todas las politicas, seguridad y terminos al registrarse.</string>
     <string name="test_ok">Aceptar</string>
     <string name="test_cancel">Cancelar</string>
+    <string name="menu_home">Productos</string>
 
 </resources>

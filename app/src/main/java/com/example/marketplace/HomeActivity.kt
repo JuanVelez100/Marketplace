@@ -13,6 +13,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.marketplace.databinding.ActivityHomeBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
@@ -99,5 +101,12 @@ class HomeActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         onBackPressed()
     }
+
+
+
+
+
+
+
 
 }
