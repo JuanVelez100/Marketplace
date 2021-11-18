@@ -12,37 +12,38 @@ import java.io.InputStream
 import java.net.URL
 
 
-public  class ProductAdapter(private val dataSet: List<ProductEntity>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+public  class ProductAdapter(private val dataSet: MutableList<ProductEntity>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    public class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_product, viewGroup, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var titleItems = holder.itemView.findViewById<TextView>(R.id.titleItem);
-        titleItems.text = dataSet[position].title;
+        var productEntity = dataSet[position]
 
-        var costItems = holder.itemView.findViewById<TextView>(R.id.costItem);
-        costItems.text = dataSet[position].cost;
+        holder.titleItems.text = productEntity.title;
 
-        var imagenItem = holder.itemView.findViewById<ImageView>(R.id.imagenItem);
-        Picasso.get().load(dataSet[position].imagen).into(imagenItem);
+        holder.costItems.text = productEntity.cost;
 
-        var categoryItem = holder.itemView.findViewById<TextView>(R.id.categoryItem);
-        categoryItem.text = dataSet[position].category;
+        Picasso.get().load(productEntity.imagen).into(holder.imagenItem);
 
-        var sellerItem = holder.itemView.findViewById<TextView>(R.id.sellerItem);
-        sellerItem.text = dataSet[position].seller;
+        holder.categoryItem.text = productEntity.category;
 
+        holder.sellerItem.text = productEntity.seller;
     }
 
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount():Int{
+        return dataSet.size
+    }
 
-
+    public class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val titleItems :TextView = itemView.findViewById<TextView>(R.id.titleItem)
+        val costItems :TextView = itemView.findViewById<TextView>(R.id.costItem)
+        val imagenItem :ImageView = itemView.findViewById<ImageView>(R.id.imagenItem)
+        val categoryItem:TextView = itemView.findViewById<TextView>(R.id.categoryItem);
+        var sellerItem :TextView= itemView.findViewById<TextView>(R.id.sellerItem);
+    }
 
 }
