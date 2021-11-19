@@ -54,6 +54,7 @@ class RegisterActivity : AppCompatActivity() {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
+
                         //Save User
                         db.collection("user").document(username).set(
                             hashMapOf("password" to password,
@@ -61,6 +62,7 @@ class RegisterActivity : AppCompatActivity() {
                                 "lastname" to lastname,
                                 "mobile" to mobile,
                                 "terms" to terms))
+
 
                         showHome(username, ProviderType.BASIC)
                     } else {

@@ -3,7 +3,9 @@ package com.example.marketplace
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -75,10 +77,21 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.home, menu)
         return true
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_singoff -> {
+                onSignoff();
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_home)
@@ -86,7 +99,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    fun onSignoff(view: android.view.View) {
+    fun onSignoff() {
 
         //Delete Data
         val prefs=getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE).edit()
@@ -101,12 +114,5 @@ class HomeActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signOut()
         onBackPressed()
     }
-
-
-
-
-
-
-
 
 }

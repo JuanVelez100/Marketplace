@@ -27,6 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -42,15 +43,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/test_provider"
                 android:textSize="12dp" />
-
-            <Button
-                android:id="@+id/btnSignoff"
-                android:layout_width="85dp"
-                android:layout_height="35dp"
-                android:backgroundTint="@color/green_200"
-                android:onClick="onSignoff"
-                android:text="@string/test_signoff"
-                android:textSize="12dp"/>
 
         </LinearLayout>
 

@@ -16,14 +16,15 @@
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_main.xml" value="0.2109375" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/activity_register.xml" value="0.33" />
-        <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/app_bar_home.xml" value="0.18" />
+        <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/app_bar_home.xml" value="0.33" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/content_home.xml" value="0.225" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/fragment_gallery.xml" value="0.1947463768115942" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/fragment_slideshow.xml" value="0.19067028985507245" />
-        <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/item_product.xml" value="0.5" />
+        <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/item_product.xml" value="0.32386363636363635" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/layout/nav_header_home.xml" value="0.33" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
+        <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/menu/home.xml" value="0.225" />
         <entry key="..\:/Users/juand/AndroidStudioProjects/Marketplace/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18802083333333333" />
       </map>
     </option>
