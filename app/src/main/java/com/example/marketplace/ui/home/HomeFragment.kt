@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -21,8 +22,11 @@ import com.google.firebase.firestore.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import android.R.attr.category
 
-class HomeFragment : Fragment(),SearchView.OnQueryTextListener, AdapterView.OnItemSelectedListener {
+
+class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
+    AdapterView.OnItemSelectedListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -33,7 +37,7 @@ class HomeFragment : Fragment(),SearchView.OnQueryTextListener, AdapterView.OnIt
     private var listProduct = mutableListOf<ProductEntity>()
     private lateinit var productAdapter: ProductAdapter
 
-    private lateinit var svSearch : SearchView
+    private lateinit var svSearch: SearchView
 
     private lateinit var spinnerCategory: Spinner
     private lateinit var spinnerSeller: Spinner
@@ -59,12 +63,12 @@ class HomeFragment : Fragment(),SearchView.OnQueryTextListener, AdapterView.OnIt
         recycleView.adapter = productAdapter;
 
         //Search
-        svSearch =  root.findViewById<SearchView>(R.id.svSearch)
+        svSearch = root.findViewById<SearchView>(R.id.svSearch)
         svSearch.setOnQueryTextListener(this)
 
         //Spinner Category
         spinnerCategory = root.findViewById(R.id.category_spinner)
-        spinnerCategory.onItemSelectedListener  = this
+        spinnerCategory.onItemSelectedListener = this
         listCategory.add(resources.getString(R.string.test_All))
 
         activity?.let {
@@ -104,16 +108,17 @@ class HomeFragment : Fragment(),SearchView.OnQueryTextListener, AdapterView.OnIt
     }
 
     private fun getAllProduct() {
+        listProduct.clear()
 
         db.collection("product").get().addOnSuccessListener { result ->
             for (document in result) {
                 Log.d(TAG, "${document.id} => ${document.data}")
 
-                if(!listCategory.contains(document.data["category"].toString())){
+                if (!listCategory.contains(document.data["category"].toString())) {
                     listCategory.add(document.data["category"].toString())
                 }
 
-                if(!listSeller.contains(document.data["seller"].toString())){
+                if (!listSeller.contains(document.data["seller"].toString())) {
                     listSeller.add(document.data["seller"].toString())
                 }
 
@@ -134,46 +139,136 @@ class HomeFragment : Fragment(),SearchView.OnQueryTextListener, AdapterView.OnIt
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        return  true;
+        return true;
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        listProduct.clear()
 
-        if(newText!!.isNotEmpty()){
-            db.collection("product")
-                .whereGreaterThanOrEqualTo("title", newText!!)
-                .whereLessThanOrEqualTo("title", (newText!!+"\uF7FF"))
-                .get().addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d(TAG, "${document.id} => ${document.data}")
-                        listProduct.add(
-                            ProductEntity(
-                                document.data["imagen"].toString(),
-                                document.data["title"].toString(),
-                                document.data["cost"].toString(),
-                                document.data["category"].toString(),
-                                document.data["seller"].toString()
-                            )
-                        )
-                    }
-                    productAdapter.notifyDataSetChanged();
-                }
-
-        }else{
+        if (newText!!.isEmpty()) {
             getAllProduct()
+        } else {
+            searchForTitle(newText)
         }
 
-        return  true;
+        return true;
     }
-
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
+        if (parent != null) {
+
+            var category: String = spinnerCategory.getSelectedItem().toString()
+            var seller: String = spinnerSeller.getSelectedItem().toString()
+
+            var all = resources.getString(R.string.test_All)
+
+            if (category == all && seller == all) {
+                getAllProduct()
+            } else {
+                if (category == all) {
+                    filterForSeller(seller)
+                } else {
+                    if (seller == all) {
+                        filterForCategory(category)
+                    } else {
+                        filterForCategoryAndSeller(category, seller)
+                    }
+                }
+            }
+
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
+    }
+
+    private fun filterForCategory(category: String) {
+        listProduct.clear()
+
+        db.collection("product")
+            .whereEqualTo("category", category)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    listProduct.add(
+                        ProductEntity(
+                            document.data["imagen"].toString(),
+                            document.data["title"].toString(),
+                            document.data["cost"].toString(),
+                            document.data["category"].toString(),
+                            document.data["seller"].toString()
+                        )
+                    )
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+    }
+
+    private fun filterForSeller(seller: String) {
+        listProduct.clear()
+
+        db.collection("product")
+            .whereEqualTo("seller", seller)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    listProduct.add(
+                        ProductEntity(
+                            document.data["imagen"].toString(),
+                            document.data["title"].toString(),
+                            document.data["cost"].toString(),
+                            document.data["category"].toString(),
+                            document.data["seller"].toString()
+                        )
+                    )
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+    }
+
+    private fun filterForCategoryAndSeller(category: String, seller: String) {
+        listProduct.clear()
+
+        db.collection("product")
+            .whereEqualTo("seller", seller).whereEqualTo("category", category)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    listProduct.add(
+                        ProductEntity(
+                            document.data["imagen"].toString(),
+                            document.data["title"].toString(),
+                            document.data["cost"].toString(),
+                            document.data["category"].toString(),
+                            document.data["seller"].toString()
+                        )
+                    )
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+    }
+
+    private fun searchForTitle(newText: String) {
+        listProduct.clear()
+        db.collection("product")
+            .whereGreaterThanOrEqualTo("title", newText)
+            .whereLessThanOrEqualTo("title", (newText + "\uF7FF"))
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                    listProduct.add(
+                        ProductEntity(
+                            document.data["imagen"].toString(),
+                            document.data["title"].toString(),
+                            document.data["cost"].toString(),
+                            document.data["category"].toString(),
+                            document.data["seller"].toString()
+                        )
+                    )
+                }
+                productAdapter.notifyDataSetChanged();
+            }
     }
 
 

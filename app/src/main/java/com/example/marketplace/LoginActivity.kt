@@ -57,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
         session()
     }
 
-
     override fun onStart() {
         super.onStart()
 

@@ -43,5 +43,7 @@
     <string name="menu_home">Productos</string>
     <string name="test_search">Buscar</string>
     <string name="test_All">Todos</string>
+    <string name="test_Category">Categoria</string>
+    <string name="test_Seller">Vendedor</string>
 
 </resources>
