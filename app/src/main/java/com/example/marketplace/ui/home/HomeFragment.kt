@@ -23,10 +23,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import android.R.attr.category
+import androidx.navigation.Navigation
 
 
 class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
-    AdapterView.OnItemSelectedListener {
+    AdapterView.OnItemSelectedListener ,ProductAdapter.OnItemClickListener{
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -59,7 +60,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
         recycleView.setHasFixedSize(true)
 
         getAllProduct()
-        productAdapter = ProductAdapter(listProduct);
+        productAdapter = ProductAdapter(listProduct,this);
         recycleView.adapter = productAdapter;
 
         //Search
@@ -98,7 +99,6 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
             }
         }
 
-
         return root
     }
 
@@ -122,21 +122,26 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                     listSeller.add(document.data["seller"].toString())
                 }
 
-                listProduct.add(
-                    ProductEntity(
-                        document.data["imagen"].toString(),
-                        document.data["title"].toString(),
-                        document.data["cost"].toString(),
-                        document.data["category"].toString(),
-                        document.data["seller"].toString()
+                var productExist =listProduct.find { it.id == document.id }
+
+                if(productExist == null){
+                    listProduct.add(
+                        ProductEntity(
+                            document.data["imagen"].toString(),
+                            document.data["title"].toString(),
+                            document.data["cost"].toString(),
+                            document.data["category"].toString(),
+                            document.data["seller"].toString(),
+                            document.id
+                        )
                     )
-                )
+                }
+
             }
             productAdapter.notifyDataSetChanged();
         }
 
     }
-
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true;
@@ -191,15 +196,21 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    listProduct.add(
-                        ProductEntity(
-                            document.data["imagen"].toString(),
-                            document.data["title"].toString(),
-                            document.data["cost"].toString(),
-                            document.data["category"].toString(),
-                            document.data["seller"].toString()
+
+                    var productExist =listProduct.find { it.id == document.id }
+
+                    if(productExist == null){
+                        listProduct.add(
+                            ProductEntity(
+                                document.data["imagen"].toString(),
+                                document.data["title"].toString(),
+                                document.data["cost"].toString(),
+                                document.data["category"].toString(),
+                                document.data["seller"].toString(),
+                                document.id
+                            )
                         )
-                    )
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
@@ -213,15 +224,21 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    listProduct.add(
-                        ProductEntity(
-                            document.data["imagen"].toString(),
-                            document.data["title"].toString(),
-                            document.data["cost"].toString(),
-                            document.data["category"].toString(),
-                            document.data["seller"].toString()
+
+                    var productExist =listProduct.find { it.id == document.id }
+
+                    if(productExist == null){
+                        listProduct.add(
+                            ProductEntity(
+                                document.data["imagen"].toString(),
+                                document.data["title"].toString(),
+                                document.data["cost"].toString(),
+                                document.data["category"].toString(),
+                                document.data["seller"].toString(),
+                                document.id
+                            )
                         )
-                    )
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
@@ -235,15 +252,21 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    listProduct.add(
-                        ProductEntity(
-                            document.data["imagen"].toString(),
-                            document.data["title"].toString(),
-                            document.data["cost"].toString(),
-                            document.data["category"].toString(),
-                            document.data["seller"].toString()
+
+                    var productExist =listProduct.find { it.id == document.id }
+
+                    if(productExist == null){
+                        listProduct.add(
+                            ProductEntity(
+                                document.data["imagen"].toString(),
+                                document.data["title"].toString(),
+                                document.data["cost"].toString(),
+                                document.data["category"].toString(),
+                                document.data["seller"].toString(),
+                                document.id
+                            )
                         )
-                    )
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
@@ -257,18 +280,44 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
-                    listProduct.add(
-                        ProductEntity(
-                            document.data["imagen"].toString(),
-                            document.data["title"].toString(),
-                            document.data["cost"].toString(),
-                            document.data["category"].toString(),
-                            document.data["seller"].toString()
+
+                    var productExist =listProduct.find { it.id == document.id }
+
+                    if(productExist == null){
+                        listProduct.add(
+                            ProductEntity(
+                                document.data["imagen"].toString(),
+                                document.data["title"].toString(),
+                                document.data["cost"].toString(),
+                                document.data["category"].toString(),
+                                document.data["seller"].toString(),
+                                document.id
+                            )
                         )
-                    )
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
+    }
+
+    override fun onItemClick(position: Int) {
+
+        val productItem : ProductEntity = listProduct[position]
+
+        Toast.makeText(
+            activity,
+            "Item $position clicked ${productItem.id}  ${productItem.title}",
+            Toast.LENGTH_SHORT
+        ).show();
+
+        var bundle = Bundle()
+        bundle.putString("product",productItem.id)
+        parentFragmentManager.setFragmentResult("key",bundle)
+
+        //Pasar a frament Product
+        var nav = Navigation.createNavigateOnClickListener(R.id.nav_product)
+        nav.onClick(view)
+
     }
 
 

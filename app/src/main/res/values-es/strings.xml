@@ -45,5 +45,7 @@
     <string name="test_All">Todos</string>
     <string name="test_Category">Categoria</string>
     <string name="test_Seller">Vendedor</string>
-
+    <string name="menu_gallery">Carrito</string>
+    <string name="menu_slideshow">Pedidos</string>
+    <string name="menu_product">Producto</string>
 </resources>

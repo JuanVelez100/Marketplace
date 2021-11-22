@@ -58,7 +58,10 @@
     <string name="action_settings" translatable="false">Settings</string>
 
     <string name="menu_home">Products</string>
-    <string name="menu_gallery" translatable="false">Gallery</string>
-    <string name="menu_slideshow" translatable="false">Slideshow</string>
+    <string name="menu_gallery">Cart</string>
+    <string name="menu_slideshow">Orders</string>
+    <string name="menu_product">Product</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
 </resources>
