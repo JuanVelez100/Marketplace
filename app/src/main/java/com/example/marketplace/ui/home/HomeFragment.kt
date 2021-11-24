@@ -14,20 +14,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.marketplace.ProductAdapter
-import com.example.marketplace.ProductEntity
-import com.example.marketplace.R
 import com.example.marketplace.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import android.R.attr.category
+import android.content.Context
 import androidx.navigation.Navigation
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.preference.PreferenceManager
 
+import android.content.SharedPreferences
+import com.example.marketplace.*
+import com.example.marketplace.R
 
-class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
-    AdapterView.OnItemSelectedListener ,ProductAdapter.OnItemClickListener{
+public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
+    AdapterView.OnItemSelectedListener, ProductAdapter.OnItemClickListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -60,7 +64,7 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
         recycleView.setHasFixedSize(true)
 
         getAllProduct()
-        productAdapter = ProductAdapter(listProduct,this);
+        productAdapter = ProductAdapter(listProduct, this);
         recycleView.adapter = productAdapter;
 
         //Search
@@ -122,9 +126,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                     listSeller.add(document.data["seller"].toString())
                 }
 
-                var productExist =listProduct.find { it.id == document.id }
+                var productExist = listProduct.find { it.id == document.id }
 
-                if(productExist == null){
+                if (productExist == null) {
                     listProduct.add(
                         ProductEntity(
                             document.data["imagen"].toString(),
@@ -132,7 +136,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                             document.data["cost"].toString(),
                             document.data["category"].toString(),
                             document.data["seller"].toString(),
-                            document.id
+                            document.id,
+                            averageScore(document.id)
                         )
                     )
                 }
@@ -197,9 +202,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
 
-                    var productExist =listProduct.find { it.id == document.id }
+                    var productExist = listProduct.find { it.id == document.id }
 
-                    if(productExist == null){
+                    if (productExist == null) {
                         listProduct.add(
                             ProductEntity(
                                 document.data["imagen"].toString(),
@@ -207,7 +212,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["cost"].toString(),
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
-                                document.id
+                                document.id,
+                                averageScore(document.id)
                             )
                         )
                     }
@@ -225,9 +231,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
 
-                    var productExist =listProduct.find { it.id == document.id }
+                    var productExist = listProduct.find { it.id == document.id }
 
-                    if(productExist == null){
+                    if (productExist == null) {
                         listProduct.add(
                             ProductEntity(
                                 document.data["imagen"].toString(),
@@ -235,7 +241,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["cost"].toString(),
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
-                                document.id
+                                document.id,
+                                averageScore(document.id)
                             )
                         )
                     }
@@ -253,9 +260,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
 
-                    var productExist =listProduct.find { it.id == document.id }
+                    var productExist = listProduct.find { it.id == document.id }
 
-                    if(productExist == null){
+                    if (productExist == null) {
                         listProduct.add(
                             ProductEntity(
                                 document.data["imagen"].toString(),
@@ -263,7 +270,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["cost"].toString(),
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
-                                document.id
+                                document.id,
+                                averageScore(document.id)
                             )
                         )
                     }
@@ -281,9 +289,9 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                 for (document in result) {
                     Log.d(TAG, "${document.id} => ${document.data}")
 
-                    var productExist =listProduct.find { it.id == document.id }
+                    var productExist = listProduct.find { it.id == document.id }
 
-                    if(productExist == null){
+                    if (productExist == null) {
                         listProduct.add(
                             ProductEntity(
                                 document.data["imagen"].toString(),
@@ -291,7 +299,8 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["cost"].toString(),
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
-                                document.id
+                                document.id,
+                                averageScore(document.id)
                             )
                         )
                     }
@@ -302,22 +311,39 @@ class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
 
     override fun onItemClick(position: Int) {
 
-        val productItem : ProductEntity = listProduct[position]
+        val productItem: ProductEntity = listProduct[position]
 
-        Toast.makeText(
-            activity,
-            "Item $position clicked ${productItem.id}  ${productItem.title}",
-            Toast.LENGTH_SHORT
-        ).show();
+        //Go  ProductActivity
+        val prefs = requireActivity().getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
+        val email = prefs.getString("email", null)
 
-        var bundle = Bundle()
+        var bundle =Bundle()
+        bundle.putString("email",email)
         bundle.putString("product",productItem.id)
         parentFragmentManager.setFragmentResult("key",bundle)
 
-        //Pasar a frament Product
         var nav = Navigation.createNavigateOnClickListener(R.id.nav_product)
-        nav.onClick(view)
+        nav.onClick(view);
 
+    }
+
+    private fun averageScore(product: String):Double{
+
+        var average : Double = 0.0
+
+        db.collection("product").document(product).collection("score").get()
+            .addOnSuccessListener {
+
+                if (it.any()) {
+                    for (score in it) {
+                        average += score.get("score").toString().toDouble()
+                    }
+                    average /= it.count()
+                    productAdapter.notifyDataSetChanged();
+                }
+            }
+
+        return average
     }
 
 

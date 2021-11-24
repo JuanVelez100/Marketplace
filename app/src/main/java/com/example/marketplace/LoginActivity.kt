@@ -60,8 +60,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val prefs =
-            getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
         val email = prefs.getString("email", null)
         val provider = prefs.getString("provider", null)
 

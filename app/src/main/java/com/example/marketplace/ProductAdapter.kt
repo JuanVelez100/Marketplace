@@ -35,6 +35,8 @@ public  class ProductAdapter(private val dataSet: MutableList<ProductEntity>,pri
         holder.categoryItem.text = productEntity.category;
 
         holder.sellerItem.text = productEntity.seller;
+
+        holder.scoreItem.text = productEntity.score.toString();
     }
 
     override fun getItemCount():Int{
@@ -46,7 +48,8 @@ public  class ProductAdapter(private val dataSet: MutableList<ProductEntity>,pri
         val costItems :TextView = itemView.findViewById<TextView>(R.id.costItem)
         val imagenItem :ImageView = itemView.findViewById<ImageView>(R.id.imagenItem)
         val categoryItem:TextView = itemView.findViewById<TextView>(R.id.categoryItem);
-        var sellerItem :TextView= itemView.findViewById<TextView>(R.id.sellerItem);
+        val sellerItem :TextView= itemView.findViewById<TextView>(R.id.sellerItem);
+        val scoreItem :TextView= itemView.findViewById<TextView>(R.id.scoreItem);
 
         init {
             itemView.setOnClickListener(this)

@@ -29,8 +29,8 @@
 
     <fragment
         android:id="@+id/nav_product"
-        android:name="com.example.marketplace.ui.slideshow.SlideshowFragment"
+        android:name="com.example.marketplace.ProductFragment"
         android:label="@string/menu_product"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_product" />
 
 </navigation>
