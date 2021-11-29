@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Category"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/sellerItem"
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Seller"
-                    android:textSize="15dp"
+                    android:textSize="18dp"
                     android:layout_marginLeft="10dp"/>
 
             </LinearLayout>

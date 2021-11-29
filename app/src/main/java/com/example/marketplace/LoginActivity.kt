@@ -176,8 +176,8 @@ class LoginActivity : AppCompatActivity() {
 
     fun facebookLogin(view: android.view.View) {
 
-        FacebookSdk.sdkInitialize(this);
-        Log.d("AppLog", "key:" + FacebookSdk.getApplicationSignature(this)+"=");
+       // FacebookSdk.sdkInitialize(this);
+      //  Log.d("AppLog", "key:" + FacebookSdk.getApplicationSignature(this)+"=");
 
         LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
 

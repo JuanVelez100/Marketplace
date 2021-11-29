@@ -16,19 +16,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marketplace.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import android.R.attr.category
 import android.content.Context
 import androidx.navigation.Navigation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.preference.PreferenceManager
-
 import android.content.SharedPreferences
+import androidx.lifecycle.lifecycleScope
 import com.example.marketplace.*
 import com.example.marketplace.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
     AdapterView.OnItemSelectedListener, ProductAdapter.OnItemClickListener {
@@ -116,7 +119,6 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
 
         db.collection("product").get().addOnSuccessListener { result ->
             for (document in result) {
-                Log.d(TAG, "${document.id} => ${document.data}")
 
                 if (!listCategory.contains(document.data["category"].toString())) {
                     listCategory.add(document.data["category"].toString())
@@ -137,15 +139,19 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                             document.data["category"].toString(),
                             document.data["seller"].toString(),
                             document.id,
-                            averageScore(document.id)
+                            document.data["average"].toString().toDouble()
                         )
                     )
                 }
 
             }
+
+            lifecycleScope.launch {
+                averageScore()
+            }
+
             productAdapter.notifyDataSetChanged();
         }
-
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -153,19 +159,17 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-
         if (newText!!.isEmpty()) {
             getAllProduct()
         } else {
             searchForTitle(newText)
         }
-
         return true;
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-        if (parent != null) {
+        if (parent != null && parent.getItemAtPosition(position).toString().isNotEmpty()) {
 
             var category: String = spinnerCategory.getSelectedItem().toString()
             var seller: String = spinnerSeller.getSelectedItem().toString()
@@ -213,7 +217,7 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
                                 document.id,
-                                averageScore(document.id)
+                                document.data["average"].toString().toDouble()
                             )
                         )
                     }
@@ -242,13 +246,14 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
                                 document.id,
-                                averageScore(document.id)
+                                document.data["average"].toString().toDouble()
                             )
                         )
                     }
                 }
                 productAdapter.notifyDataSetChanged();
             }
+
     }
 
     private fun filterForCategoryAndSeller(category: String, seller: String) {
@@ -271,13 +276,15 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
                                 document.id,
-                                averageScore(document.id)
+                                document.data["average"].toString().toDouble()
                             )
                         )
                     }
                 }
+
                 productAdapter.notifyDataSetChanged();
             }
+
     }
 
     private fun searchForTitle(newText: String) {
@@ -300,13 +307,15 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
                                 document.data["category"].toString(),
                                 document.data["seller"].toString(),
                                 document.id,
-                                averageScore(document.id)
+                                document.data["average"].toString().toDouble()
                             )
                         )
                     }
                 }
+
                 productAdapter.notifyDataSetChanged();
             }
+
     }
 
     override fun onItemClick(position: Int) {
@@ -314,36 +323,35 @@ public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
         val productItem: ProductEntity = listProduct[position]
 
         //Go  ProductActivity
-        val prefs = requireActivity().getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
-        val email = prefs.getString("email", null)
-
-        var bundle =Bundle()
-        bundle.putString("email",email)
-        bundle.putString("product",productItem.id)
-        parentFragmentManager.setFragmentResult("key",bundle)
+        var bundle = Bundle()
+        bundle.putString("product", productItem.id)
+        parentFragmentManager.setFragmentResult("key", bundle)
 
         var nav = Navigation.createNavigateOnClickListener(R.id.nav_product)
         nav.onClick(view);
 
     }
 
-    private fun averageScore(product: String):Double{
 
-        var average : Double = 0.0
+    private suspend fun averageScore() {
 
-        db.collection("product").document(product).collection("score").get()
-            .addOnSuccessListener {
+        for (product in listProduct) {
+            var average = 0.0
+            db.collection("product").document(product.id).collection("comments").get()
+                .addOnSuccessListener {
 
-                if (it.any()) {
-                    for (score in it) {
-                        average += score.get("score").toString().toDouble()
+                    if (it.any()) {
+
+                        for (score in it) {
+                            average += score.data["score"].toString().toDouble()
+                        }
+
+                        db.collection("product").document(product.id).update(
+                            "average",  average / it.count()
+                        )
                     }
-                    average /= it.count()
-                    productAdapter.notifyDataSetChanged();
-                }
-            }
-
-        return average
+                }.await()
+        }
     }
 
 

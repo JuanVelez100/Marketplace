@@ -48,4 +48,9 @@
     <string name="menu_gallery">Carrito</string>
     <string name="menu_slideshow">Pedidos</string>
     <string name="menu_product">Producto</string>
+    <string name="test_description">Descripción</string>
+    <string name="test_Comments">Comentarios</string>
+    <string name="test_stars">Estrellas</string>
+    <string name="test_total">Total </string>
+    <string name="test_buy">Comprar</string>
 </resources>
