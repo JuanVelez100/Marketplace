@@ -62,8 +62,8 @@ class GalleryFragment : Fragment() {
         listCar.clear()
 
         var idCar = ""
-        val prefs = requireActivity().getSharedPreferences(resources.getString(R.string.car_file), Context.MODE_PRIVATE)
-        idCar = prefs.getString("id", null).toString()
+        val prefs = requireActivity().getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
+        idCar = prefs.getString("car", null).toString()
 
         if(idCar != null && idCar.isNotEmpty()){
 
@@ -76,7 +76,8 @@ class GalleryFragment : Fragment() {
                                     item.data["image"].toString(),
                                     item.data["title"].toString(),
                                     item.data["cost"].toString(),
-                                    item.data["amount"].toString()
+                                    item.data["amount"].toString(),
+                                    item.id.toString()
                                 )
                             )
 

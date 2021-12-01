@@ -24,14 +24,14 @@ public  class CarAdapter(private val dataSet: MutableList<CarEntity>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var productEntity = dataSet[position]
+        var carEntity = dataSet[position]
 
-        holder.titleItems.text = productEntity.title;
+        holder.titleItems.text = carEntity.title;
 
-        var total = productEntity.cost.toInt() * productEntity.amount.toInt()
-        holder.costItems.text = productEntity.cost +" x "+ productEntity.amount + " = " + total
+        var total = carEntity.cost.toInt() * carEntity.amount.toInt()
+        holder.costItems.text = carEntity.cost +" x "+ carEntity.amount + " = " + total
 
-        Picasso.get().load(productEntity.imagen).into(holder.imagenItem);
+        Picasso.get().load(carEntity.imagen).into(holder.imagenItem);
 
     }
 

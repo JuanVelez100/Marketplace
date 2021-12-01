@@ -91,16 +91,18 @@ class ProductFragment : Fragment() {
 
             //Save Car
             var idCar = ""
-            val prefs = requireActivity().getSharedPreferences(resources.getString(R.string.car_file), Context.MODE_PRIVATE)
-            idCar = prefs.getString("id", null).toString()
+            val getPrefs = requireActivity().getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
+            idCar = getPrefs.getString("car", null).toString()
+            var email = getPrefs.getString("email", null).toString()
 
-            if(idCar == null || idCar.isEmpty()){
+            if(idCar == null || idCar.isEmpty() || idCar == "null"){
                 idCar = UUID.randomUUID().toString()
-                prefs.edit().putString("id",idCar)
-                prefs.edit().apply()
+                val setPrefs = requireActivity().getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE).edit()
+                setPrefs.putString("car",idCar)
+                setPrefs.apply()
             }
 
-            db.collection("car").document(idCar).set(hashMapOf("state" to false))
+            db.collection("car").document(idCar).set(hashMapOf("state" to false,"email" to email))
 
             db.collection("car").document(idCar)
               .collection("products").document(idProduct!!.text.toString()).set(

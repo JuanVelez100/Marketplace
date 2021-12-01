@@ -14,6 +14,21 @@
         android:background="@drawable/customborderproduct"
         android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right">
+
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:background="@android:drawable/ic_delete"/>
+
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/imagenItem"
             android:layout_width="60dp"
@@ -56,7 +71,6 @@
 
 
         </LinearLayout>
-
 
     </LinearLayout>
 

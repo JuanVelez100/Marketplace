@@ -98,7 +98,7 @@
                 android:drawableLeft="@drawable/start"
                 android:drawablePadding="5dp"
                 android:singleLine="true"
-                android:text="4"
+                android:text="0"
                 android:textColor="@color/blue_700"
                 android:textSize="20dp" />
 
