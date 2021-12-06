@@ -1,5 +1,6 @@
 package com.example.marketplace.ui.slideshow
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +57,10 @@ class SlideshowFragment : Fragment() {
     fun getAllOrderNew() {
         listOrder.clear()
 
-        db.collection("car").whereEqualTo("state", true)
+        val prefs = requireActivity().getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE)
+        var email = prefs.getString("email", null).toString()
+
+        db.collection("car").whereEqualTo("state", true).whereEqualTo("email",email)
             .get().addOnSuccessListener {
                 if (it.any()) {
 
