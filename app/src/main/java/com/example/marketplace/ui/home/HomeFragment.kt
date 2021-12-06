@@ -8,30 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marketplace.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.*
-import android.R.attr.category
-import android.content.Context
 import androidx.navigation.Navigation
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.preference.PreferenceManager
-import android.content.SharedPreferences
 import androidx.lifecycle.lifecycleScope
 import com.example.marketplace.*
 import com.example.marketplace.R
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import java.text.DecimalFormat
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 public class HomeFragment : Fragment(), SearchView.OnQueryTextListener,
     AdapterView.OnItemSelectedListener, ProductAdapter.OnItemClickListener {

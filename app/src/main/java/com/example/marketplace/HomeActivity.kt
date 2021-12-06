@@ -95,7 +95,8 @@ class HomeActivity : AppCompatActivity() {
 
         //Delete Data
         val prefs=getSharedPreferences(resources.getString(R.string.preds_file), Context.MODE_PRIVATE).edit()
-        prefs.clear()
+        prefs.remove("email")
+        prefs.remove("provider")
         prefs.apply()
 
         val navView: NavigationView = binding.navView

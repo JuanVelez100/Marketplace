@@ -133,9 +133,39 @@
                 android:onClick="facebookLogin"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+            <Button
+                android:id="@+id/btnMaps"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/maps"
+                android:gravity="center_horizontal|top"
+                android:onClick="onMaps"
+                tools:ignore="SpeakableTextPresentCheck"  />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/recovery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRecovery"
+                android:gravity="center"
+                android:padding="20px"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/test_RecoveryQuestion"
+                android:linksClickable="true"
+                android:backgroundTint="@android:color/transparent"
+                android:textColor="@color/blue_200" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

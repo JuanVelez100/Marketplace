@@ -53,4 +53,8 @@
     <string name="test_stars">Estrellas</string>
     <string name="test_total">Total </string>
     <string name="test_buy">Comprar</string>
+    <string name="menu_Order">Pedido</string>
+    <string name="test_RecoveryQuestion">¿Has olvidado tu contraseña?</string>
+    <string name="test_Recovery">Recuperación</string>
+    <string name="test_Maps">Mapa</string>
 </resources>
